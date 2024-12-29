@@ -1,8 +1,5 @@
 # HowTo: Linux SSH-Key im Linux Terminal
 
-### Dieses Tutorial enthält die ergänzende Videobeschreibung meines YouTube Videos... ###
-# **[SSH Public Key Verbindung zu einem Synology NAS einrichten](https://youtu.be/VjoWjX_8E3Q)** #
-
 ## **Mit einem Terminal Programm auf die Konsole des Linux Betriebssystems aufschalten**
 Wir benötigen zunächst einmal ein Terminal Programm um uns auf die Konsole unseres Linux Betriebssystem zu begeben. Auf der Konsole angekommen wollen wir uns kurz orientieren...
 - **Wer bin ich**
