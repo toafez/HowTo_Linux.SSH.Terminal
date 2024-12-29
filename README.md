@@ -103,7 +103,7 @@ Wir benötigen zunächst einmal ein Terminal Programm um uns auf die Konsole uns
 
     _(Anmeldung ohne Passwort)_
 
-## Wieder auf deinem SRemote-Server
+## Wieder auf deinem Remote-Server
 
 - **Dateirechte setzten**
 
