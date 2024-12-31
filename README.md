@@ -1,6 +1,6 @@
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Ftoafez%2FHowTo_Linux.SSH.Terminal&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 
-# HowTo: Linux SSH-Key im Linux Terminal
+# HowTo: SSH-Key im Linux Terminal
 Secure Shell, abgekürzt SSH, ist ein Netzwerkprotokoll zum Aufbau verschlüsselter Verbindungen zwischen Geräten im lokalen Netzwerk oder über das Internet. Die Anmeldung erfolgt in der Regel über die Eingabe eines Benutzernamens und des zugehörigen Passworts. Neben dem Verbindungsaufbau direkt über das Terminal werden auch grafische Benutzeroberflächen wie PuTTY verwendet. Durch die Verwendung einer RSA-Schlüssel-Authentifizierung entfällt beim SSH-Verbindungsaufbau zu einem entfernten Server die Eingabe von Benutzername und Passwort. Dies ermöglicht einen automatisierten Verbindungsaufbau ohne die Anwesenheit eines Benutzers. Die Authentifizierung erfolgt hierbei über einen zuvor generierten privaten Schlüssel ohne Passwort und einen daraus resultierenden öffentlichen Schlüssel.
 
 **Hinweis:** **Texte** in Großbuchstaben **innerhalb eckiger Klammern** dienen als **Platzhalter** und müssen durch eigene Angaben ersetzt werden, können aber an einigen Stellen auch nur der Information dienen. Es ist zu beachten, dass die eckigen Klammern Teil des Platzhalters sind und beim Ersetzen durch eigene Angaben ebenfalls entfernt werden müssen.
@@ -134,7 +134,7 @@ Es ist wichtig, dass sowohl das Verzeichnis .ssh als auch die darin enthaltenen 
 `chmod 600 ~/.ssh/authorized_keys`
 
 ## SSH-Verbindung zu deinem Remote-Server aufbauen
-1. Um dich mit deinem Remote Server verbinden zu können, benötigst du neben der IP-Adresse [IP-ADRESSE] und dem [PORT] auch den Benutzernamen [BENUTZERNAME] sowie das zugehörige Passwort. Ersetze daher im folgenden Befehl die Platzhalter für [PORT], [BENUTZERNAME] und [IP-ADRESSE] durch deine eigenen Daten. Führe anschließend folgenden Befehl aus
+1. Um dich mit deinem Remote Server verbinden zu können, benötigst du neben der IP-Adresse und dem Port auch den Benutzernamen sowie das zugehörige Passwort. Ersetze daher im folgenden Befehl die Platzhalter für [PORT], [BENUTZERNAME] und [IP-ADRESSE] durch deine eigenen Daten. Führe anschließend folgenden Befehl aus
 
     `ssh -p [PORT] [BENUTZERNAME]@[IP-ADRESSE]`
 
