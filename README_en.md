@@ -9,7 +9,7 @@ The following instructions describe **how to set up SSH public key authenticatio
 Secure Shell, or SSH for short, is a network protocol for establishing encrypted connections between devices on the local network or over the Internet. SSH public key authentication uses a private and public key pair to establish a password-free login to a remote server, which can be further secured by entering an additional passphrase if required. The use of such a key pair is therefore much more difficult to compromise than entering a password.
 
 
-#### _Note: Text in uppercase within square brackets is a placeholder and must be replaced with your own information, but may be used in some places for information purposes only. Please note that the square brackets are part of the placeholder and must also be removed when replacing with your own information.
+#### _Note: Text in uppercase within square brackets is a placeholder and must be replaced with your own information, but may be used in some places for information purposes only. Please note that the square brackets are part of the placeholder and must also be removed when replacing with your own information._
 
 ## Open a terminal
 First you will need a terminal program of your choice to access the console of your client operating system.
@@ -20,7 +20,7 @@ First you will need a terminal program of your choice to access the console of y
     [USERNAME]@[CLIENT-PC]:~$ pwd
     /home/[USERNAME]
     ```
-
+    
     Following this example, you are in the home directory of the user [USERNAME] (correctly, of course, this should be your username), which is exactly where you should be. Depending on the Linux operating system you are using, a different path may be displayed here. For example, if you are using a Synology NAS, the path to the home directory of the currently logged in user would be `/var/services/homes/[USERNAME]`.
 
     **Note:** For better readability, all the following entries are displayed without using the `[USERNAME]@[CLIENT-PC]:~$` prompt.
@@ -36,9 +36,9 @@ First you will need a terminal program of your choice to access the console of y
 
     `ssh-keygen -t rsa -b 4096`
 
-    _(**-t** stands for type, i.e. the type of encryption, in this case rsa for RSA protocol 2)_.
+    _(**-t** stands for type, i.e. the type of encryption, in this case rsa for RSA protocol 2)_
 
-    _(**-b** stands for bit, i.e. the bit length of the encryption key, in this case 4096 bits)_ 1.
+    _(**-b** stands for bit, i.e. the bit length of the encryption key, in this case 4096 bits)_
 
 2. Immediately after running the command, you will be asked for the filename to store the SSH keys in. If you want to keep the suggested path and filename, simply press Enter to confirm. Otherwise, you can enter an alternative filename without extension using the full path. In this example, the suggested filename is used.
 
@@ -116,16 +116,16 @@ First you will need a terminal program of your choice to access the console of y
     ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCbTJMv9N+pU8n7SaDa9RLazZwB+cR0ke2ggq/Xbria3fsuLGG/wrd5mOt1KYSg7FWiiHUSec0s1sX0OAbWk8qX47UaJKe7SP6so39kVjkRGINACsojvYI773LBpDuKmGzBqsTpBSlYLGLtA7rs669YSEV+8M6Z7NJj6YySDRBL/TSx/cjiJyh5h6yHwW/+nqzFBteqzVoBQ241nGdVzcb5S16DnJLhn2MB7es70yOzq02y5XpFSPswme6sH5/jIkNhp1OU2++jPxLNOkcN73WB3pc3jz7bZxkBSh7zJxy1o39kVjkRGISbznxxbIGDn20iAFoLF6IHl0mWhiuYVwSRjZ8M1Kf71qYv7X3RHMrKQQM5qYtpk/R0NdGrvemDP/5gAI0wOG1D/RQD8nBHzHwuNvLGLtA7rs66tcfj1g+jwwMPzEgX5MsisbIKfhwLJZE34zyfWDj/Vl5n44yG7/YDkYmxtPRsYbfLUm5D+q5dhm5+g3H8t0/eQXHel7chM5I8j4pElDhFOCF8jeaCeawxAGrRn6Dab93BHF1wwowOp4kVWKw0lnvTQfbcIc5BSrxR2uYfQk9dwiiDeE6npEN11mTezRN/tsZ6JE4OrPL8oGha7Fa73AIMvyo+/kKsl2wMpBHYRZq70dp0MTUfIAQPAvNM31yNY4B8oIKV+wBxXw== [USERNAME]@[CLIENT-PC]
     ```
 
-## Creating the authorised_keys file and adding your own public key
-1. The **authorised_keys** file will later contain all the public keys of known remote servers that wish to access your client operating system to enable a passwordless SSH connection, in addition to your own key. The following command adds your own public key to authorized_keys. If the file does not exist, it will be created automatically.
+## Creating the authorized_keys file and adding your own public key
+1. The **authorized_keys** file will later contain all the public keys of known remote servers that wish to access your client operating system to enable a passwordless SSH connection, in addition to your own key. The following command adds your own public key to authorized_keys. If the file does not exist, it will be created automatically.
 
-    `cat id_rsa.pub >> ~/.ssh/authorised_keys`
+    `cat id_rsa.pub >> ~/.ssh/authorized_keys`
 
     _(Command **>** file = (overwrite) standard output of the command in the target file.)_.
 
     _(Command **>>** file = append the standard output of the command to the target file.)_.
 
-    **Note:** The **tilde** character _(**~**)_ in the Linux file system represents the current user's home directory. This is a shortcut that allows users to access their own home directory without having to enter the full path. The path `~/.ssh/authorised_keys` is therefore identical to the path `/home/[USERNAME]/.ssh/authorised_keys`.
+    **Note:** The **tilde** character _(**~**)_ in the Linux file system represents the current user's home directory. This is a shortcut that allows users to access their own home directory without having to enter the full path. The path `~/.ssh/authorized_keys` is therefore identical to the path `/home/[USERNAME]/.ssh/authorized_keys`.
 
 ## Adjusting folder and file permissions
 It is important that both the .ssh directory and the files in it have certain permissions to restrict unauthorised access and increase security. The command **chmod** _(stands for 'change mode')_ changes the permissions of folders and files, which are as follows.
@@ -175,9 +175,9 @@ It is important that both the .ssh directory and the files in it have certain pe
 ## Transferring the Public Key to the Remote Server
 1. The contents of the id_rsa.pub file, and thus the public key, can now be transferred to the remote server via an SSH connection to the authorised_keys file, which can be created if it does not yet exist. To do this, replace the placeholders for [PORT], [USERNAME] and [IP ADDRESS] in the following command with your own without using the square brackets. Then run the following command
 
-    `cat ~/.ssh/id_rsa.pub | ssh -p [PORT] [USERNAME]@[IP-ADRESS] "cat >> ~/.ssh/authorised_keys"`
+    `cat ~/.ssh/id_rsa.pub | ssh -p [PORT] [USERNAME]@[IP-ADRESS] "cat >> ~/.ssh/authorized_keys"`
 
-2. After successfully logging in with your password, the public key was saved to the ~/.ssh/authorised_keys file on your remote server and the connection was closed. You are still on the console of your local Linux operating system.
+2. After successfully logging in with your password, the public key was saved to the ~/.ssh/authorized_keys file on your remote server and the connection was closed. You are still on the console of your local Linux operating system.
 
 
 ## To re-establish the SSH connection to your remote server...
@@ -187,6 +187,6 @@ It is important that both the .ssh directory and the files in it have certain pe
 
 2. If all went well, you should now be on your remote server's console without having entered a password (unless you are using one of the passphrases mentioned above). And while you're at it, you can also correct the permissions on the authorized_keys file by issuing the following command
 
-    `chmod 600 ~/.ssh/authorised_keys`
+    `chmod 600 ~/.ssh/authorized_keys`
 
 3. You have now successfully set up passwordless SSH key authentication.
