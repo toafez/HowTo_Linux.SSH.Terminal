@@ -20,7 +20,6 @@ First you will need a terminal program of your choice to access the console of y
     ```
     [USERNAME]@[CLIENT-PC]:~$ pwd
     /home/[USERNAME]
-
     ```
 
     Following this example, you are in the home directory of the user [USERNAME] (correctly, of course, this should be your username), which is exactly where you should be. Depending on the Linux operating system you are using, a different path may be displayed here. For example, if you are using a Synology NAS, the path to the home directory of the currently logged in user would be `/var/services/homes/[USERNAME]`.
@@ -38,9 +37,9 @@ First you will need a terminal program of your choice to access the console of y
 
     `ssh-keygen -t rsa -b 4096`
 
-    (**-t** stands for type, i.e. the type of encryption, in this case rsa for RSA protocol 2)_.
+    _(**-t** stands for type, i.e. the type of encryption, in this case rsa for RSA protocol 2)_.
 
-    (**-b** stands for bit, i.e. the bit length of the encryption key, in this case 4096 bits)_ 1.
+    _(**-b** stands for bit, i.e. the bit length of the encryption key, in this case 4096 bits)_ 1.
 
 2. Immediately after running the command, you will be asked for the filename to store the SSH keys in. If you want to keep the suggested path and filename, simply press Enter to confirm. Otherwise, you can enter an alternative filename without extension using the full path. In this example, the suggested filename is used.
 
@@ -92,9 +91,9 @@ First you will need a terminal program of your choice to access the console of y
 
     `ls -la`
 
-    (option **l** = file information is output in long form)_.
+    _(option **l** = file information is output in long form)_.
 
-    (option **a** = also show hidden files and folders starting with a dot)_.
+    _(option **a** = also show hidden files and folders starting with a dot)_.
 
     **Example of output**
 
@@ -123,9 +122,9 @@ First you will need a terminal program of your choice to access the console of y
 
     `cat id_rsa.pub >> ~/.ssh/authorised_keys`
 
-    (Command **>** file = (overwrite) standard output of the command in the target file.)_.
+    _(Command **>** file = (overwrite) standard output of the command in the target file.)_.
 
-    (Command **>>** file = append the standard output of the command to the target file.)_.
+    _(Command **>>** file = append the standard output of the command to the target file.)_.
 
     **Note:** The **tilde** character _(**~**)_ in the Linux file system represents the current user's home directory. This is a shortcut that allows users to access their own home directory without having to enter the full path. The path `~/.ssh/authorised_keys` is therefore identical to the path `/home/[USERNAME]/.ssh/authorised_keys`.
 
@@ -144,7 +143,7 @@ It is important that both the .ssh directory and the files in it have certain pe
     `ssh -p [PORT] [USERNAME]@[IP-ADRESS]`
 
 
-2. After confirming the following command with the Enter key, you should see a message at the end of the text asking you to confirm the connection with **yes**. Are you sure you want to continue the connection (yes/no/[fingerprint])?` This message only appears if you are connecting to the remote server via SSH for the first time. A **fingerprint** is stored in the `~/.ssh/known_hosts` file on your client operating system to allow future connections.
+2. After confirming the following command with the Enter key, you should see a message at the end of the text asking you to confirm the connection with **yes**. `Are you sure you want to continue the connection (yes/no/[fingerprint])?` This message only appears if you are connecting to the remote server via SSH for the first time. A **fingerprint** is stored in the `~/.ssh/known_hosts` file on your client operating system to allow future connections.
 
     ```
     The authenticity of host ‘[IP-ADRESS] ([IP-ADRESS])’ can't be established.
@@ -162,7 +161,6 @@ It is important that both the .ssh directory and the files in it have certain pe
     ```
     [USERNAME]@[REMOTE-SERVER]:~$ pwd
     /home/[USERNAME]
-
     ```
 
 4. Create a new hidden directory called .ssh and give it the necessary permissions.
