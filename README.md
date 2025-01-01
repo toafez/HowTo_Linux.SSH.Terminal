@@ -1,9 +1,16 @@
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Ftoafez%2FHowTo_Linux.SSH.Terminal&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 
 # HowTo: SSH-Key im Linux Terminal
-Secure Shell, abgekürzt SSH, ist ein Netzwerkprotokoll zum Aufbau verschlüsselter Verbindungen zwischen Geräten im lokalen Netzwerk oder über das Internet. Die Anmeldung erfolgt in der Regel über die Eingabe eines Benutzernamens und des zugehörigen Passworts. Neben dem Verbindungsaufbau direkt über das Terminal werden auch grafische Benutzeroberflächen wie PuTTY verwendet. Durch die Verwendung einer RSA-Schlüssel-Authentifizierung entfällt beim SSH-Verbindungsaufbau zu einem entfernten Server die Eingabe von Benutzername und Passwort. Dies ermöglicht einen automatisierten Verbindungsaufbau ohne die Anwesenheit eines Benutzers. Die Authentifizierung erfolgt hierbei über einen zuvor generierten privaten Schlüssel ohne Passwort und einen daraus resultierenden öffentlichen Schlüssel.
 
-**Hinweis:** **Texte** in Großbuchstaben **innerhalb eckiger Klammern** dienen als **Platzhalter** und müssen durch eigene Angaben ersetzt werden, können aber an einigen Stellen auch nur der Information dienen. Es ist zu beachten, dass die eckigen Klammern Teil des Platzhalters sind und beim Ersetzen durch eigene Angaben ebenfalls entfernt werden müssen.
+## Worum geht es?
+Die folgende Anleitung beschreibt **die Einrichtung einer SSH-Public-Key-Authentifizierung** von einem lokalen Linux-System zu einem entfernten Linux-Server **mit Hilfe eines Terminalprogramms**.
+
+## Einleitung
+Secure Shell, abgekürzt SSH, ist ein Netzwerkprotokoll zum Aufbau verschlüsselter Verbindungen zwischen Geräten im lokalen Netzwerk oder über das Internet. Bei der SSH-Public-Key-Authentifizierung wird mit Hilfe eines Schlüsselpaares, bestehend aus einem privaten und einem öffentlichen Schlüssel, eine passwortfreie Anmeldung zu einem Remote-Server aufgebaut, die bei Bedarf durch die Eingabe einer zusätzlichen Passphrase weiter abgesichert werden kann. Die Verwendung eines solchen Schlüsselpaares ist daher wesentlich schwieriger zu kompromittieren als die Eingabe eines Passwortes.
+
+#### _Hinweis: Texte in Großbuchstaben innerhalb eckiger Klammern dienen als Platzhalter und müssen durch eigene Angaben ersetzt werden, können aber an einigen Stellen auch nur der Information dienen. Es ist zu beachten, dass die eckigen Klammern Teil des Platzhalters sind und beim Ersetzen durch eigene Angaben ebenfalls entfernt werden müssen._
+
+### Hinweis: **Texte** in Großbuchstaben **innerhalb eckiger Klammern** dienen als **Platzhalter** und müssen durch eigene Angaben ersetzt werden, können aber an einigen Stellen auch nur der Information dienen. Es ist zu beachten, dass die eckigen Klammern Teil des Platzhalters sind und beim Ersetzen durch eigene Angaben ebenfalls entfernt werden müssen.
 
 ## Terminal öffnen
 Zuerst benötigst du ein Terminalprogramm deiner Wahl, um auf die Konsole deines Client-Betriebssystems zugreifen zu können.
