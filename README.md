@@ -10,8 +10,6 @@ Secure Shell, abgekürzt SSH, ist ein Netzwerkprotokoll zum Aufbau verschlüssel
 
 #### _Hinweis: Texte in Großbuchstaben innerhalb eckiger Klammern dienen als Platzhalter und müssen durch eigene Angaben ersetzt werden, können aber an einigen Stellen auch nur der Information dienen. Es ist zu beachten, dass die eckigen Klammern Teil des Platzhalters sind und beim Ersetzen durch eigene Angaben ebenfalls entfernt werden müssen._
 
-### Hinweis: **Texte** in Großbuchstaben **innerhalb eckiger Klammern** dienen als **Platzhalter** und müssen durch eigene Angaben ersetzt werden, können aber an einigen Stellen auch nur der Information dienen. Es ist zu beachten, dass die eckigen Klammern Teil des Platzhalters sind und beim Ersetzen durch eigene Angaben ebenfalls entfernt werden müssen.
-
 ## Terminal öffnen
 Zuerst benötigst du ein Terminalprogramm deiner Wahl, um auf die Konsole deines Client-Betriebssystems zugreifen zu können.
 
