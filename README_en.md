@@ -141,7 +141,7 @@ To enable password-free login to a remote server in the future, it is necessary 
 
 
 ### 1st Option: Use the `ssh-copy-id` command
-  The **ssh-copy-id** command is part of the OpenSSH package and should therefore be available on most unix-like operating systems. One exception is Synology, which uses the DiskStation Manager (DSM) operating system on its NAS systems. Here you will not find the ssh-copy-id command (as of DSM 7.2.2). In this case it is advisable to proceed with the ![2nd option](https://github.com/toafez/HowTo_Linux.SSH.Terminal/edit/main/README_en.md#2nd-option-use-the-cat-command) described in the following section.
+  The **ssh-copy-id** command is part of the OpenSSH package and should therefore be available on most unix-like operating systems. One exception is Synology, which uses the DiskStation Manager (DSM) operating system on its NAS systems. Here you will not find the ssh-copy-id command (as of DSM 7.2.2). In this case it is advisable to proceed with the [2nd option](https://github.com/toafez/HowTo_Linux.SSH.Terminal/blob/main/README_en.md#2nd-option-use-the-cat-command) described in the following section.
 
 
   ssh-copy-id connects to the remote server and checks if a directory named **.ssh** already exists in the home directory of the logged-in user. If not, it will create it. In the next step, ssh-copy-id checks if a file named **authorised_keys** exists in the .ssh directory. If not, this file is created as well. The public key is then copied into the authorised_keys file. Finally, the appropriate directory and file permissions are set before closing the connection.
@@ -165,7 +165,7 @@ To enable password-free login to a remote server in the future, it is necessary 
 
   4. After successfully logging in, the ssh-copy-id command will begin to perform the tasks described above. When the work is complete, the connection is automatically terminated and you are returned to the client operating system console.
 
-  5. Skip the 2nd option and continue with the section ![Transferring the public key to the Remote Server](https://github.com/toafez/HowTo_Linux.SSH.Terminal/blob/main/README_en.md#transferring-the-public-key-to-the-remote-server).
+  5. Skip the 2nd option and continue with the section [To re-establish the SSH connection to your remote server](https://github.com/toafez/HowTo_Linux.SSH.Terminal/blob/main/README_en.md#to-re-establish-the-ssh-connection-to-your-remote-server).
 
 ### 2nd option: Use the `cat` command
   If the ssh-copy-id command is not available, the cat command would be the method of choice. However, as this command alone does not create any directories and/or files on the remote server, nor does it assign any directory or file permissions, these steps must be performed manually using various commands. The cat command simply copies the public key of the client operating system to the authorised_keys of the remote server. In the following, all the steps are performed one after the other.
@@ -210,7 +210,7 @@ To enable password-free login to a remote server in the future, it is necessary 
 
   8. After successfully logging in with your password, the public key was saved to the ~/.ssh/authorised_keys file on your remote server and the connection was closed. You are still in the console of your local Linux operating system.
 
-## To re-establish the SSH connection to your remote server...
+## To re-establish the SSH connection to your remote server
 1. You should now be able to log in to the remote server without having to enter a password. To check if this works, log in to the remote server again.
 
     `ssh -p [PORT] [USERNAME]@[IP-ADRESS]`
