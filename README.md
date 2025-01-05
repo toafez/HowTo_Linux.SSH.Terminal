@@ -131,57 +131,85 @@ Zuerst benötigst du ein Terminalprogramm deiner Wahl, um auf die Konsole deines
     **Hinweis:** Das **Tilde**-Zeichen _(**~**)_ im Linux-Dateisystem steht für das Home-Verzeichnis des aktuellen Benutzers. Dies ist eine Abkürzung, die es Benutzern ermöglicht, auf ihr eigenes Home-Verzeichnis zuzugreifen, ohne den vollständigen Pfad eingeben zu müssen. Der Pfad `~/.ssh/authorized_keys` ist also identisch mit dem Pfad `/home/[BENUTZERNAME]/.ssh/authorized_keys`.
 
 ## Ordner und Dateirechte anpassen
-Es ist wichtig, dass sowohl das Verzeichnis .ssh als auch die darin enthaltenen Dateien bestimmte Berechtigungen haben, um den Zugriff durch Unbefugte einzuschränken und die Sicherheit zu erhöhen. Der Befehl **chmod** _(steht für "change mode")_ verändert die Zugriffsrechte von Ordner und Dateien, die wie folgt lauten.
+1. Es ist wichtig, dass sowohl das Verzeichnis .ssh als auch die darin enthaltenen Dateien bestimmte Berechtigungen haben, um den Zugriff durch Unbefugte einzuschränken und die Sicherheit zu erhöhen. Der Befehl **chmod** _(steht für "change mode")_ verändert die Zugriffsrechte von Ordnern und Dateien, die wie folgt lauten.
 
-`chmod 700 ~/.ssh`
-    
-`chmod 600 ~/.ssh/id_rsa*`
-    
-`chmod 600 ~/.ssh/authorized_keys`
+    `chmod 700 ~/.ssh`
 
-## SSH-Verbindung zu deinem Remote-Server aufbauen
-1. Um dich mit deinem Remote Server verbinden zu können, benötigst du neben der IP-Adresse und dem Port auch den Benutzernamen sowie das zugehörige Passwort. Ersetze daher im folgenden Befehl die Platzhalter für [PORT], [BENUTZERNAME] und [IP-ADRESSE] durch deine eigenen Daten. Führe anschließend folgenden Befehl aus
+    `chmod 600 ~/.ssh/id_rsa*`
 
-    `ssh -p [PORT] [BENUTZERNAME]@[IP-ADRESSE]`
+    `chmod 600 ~/.ssh/authorized_keys`
 
+## Übertragen des öffentlichen Schlüssels auf den Remote-Server
+Um in Zukunft eine passwortfreie Anmeldung an einem Remote-Server zu ermöglichen, ist es notwendig, den öffentlichen Schlüssel auf den entfernten Server zu kopieren. Der öffentliche Schlüssel kann auch auf weitere Remote-Server kopiert werden, mit denen man sich verbinden möchte, während der private Schlüssel immer auf dem lokalen Linux Betriebssystem verbleibt und niemals weitergegeben wird. Das Kopieren des öffentlichen Schlüssels kann auf verschiedene Arten erfolgen, von denen hier nur zwei näher erläutert werden, nämlich die unter Verwendung des Befehls **ssh-copy-id** und die unter Verwendung des Befehls **cat**. Eine weitere Möglichkeit ist die Verwendung des **vi-Editors** auf der Konsole des Remote-Servers, die ich bereits im meinem ![HowTo: SSH-Key mit PuTTY und PuTTYgen](https://github.com/toafez/HowTo_Windows.SSH.PuTTY.PuTTYgen) im Abschnitt ![Kopieren des öffentlichen Schlüssels auf den Remote-Server](https://github.com/toafez/HowTo_Windows.SSH.PuTTY.PuTTYgen#kopieren-des-%C3%B6ffentlichen-schl%C3%BCssels-auf-den-remote-server) beschrieben habe.
 
-2. Nachdem du den folgenden Befehl mit der Eingabetaste bestätigt hast, solltest du eine Meldung sehen, die dich am Ende des Textes auffordert, den Verbindungsaufbau mit **yes** zu bestätigen. `Are you sure you want to continue connecting (yes/no/[fingerprint])?` Diese Meldung erscheint nur, wenn du dich zum ersten Mal per SSH mit dem Remote-Server verbinden willst. Dabei wird ein sogenannter **Fingerprint** in der Datei `~/.ssh/known_hosts` auf deinem Client-Betriebssystem hinterlegt, um zukünftige Verbindungen zu erlauben.
+### 1. Möglichkeit: Die Verwendung des Befehls `ssh-copy-id`
+  Der Befehl **ssh-copy-id** ist Bestandteil des Programmpakets OpenSSH und sollte daher auf den meisten unixoiden Betriebssystemen verfügbar sein. Eine Ausnahme bildet hier z.B. die Firma Synology, die auf ihren NAS-Systemen das Betriebssystem DiskStation Manager (DSM) einsetzt. Hier sucht man den Befehl ssh-copy-id vergeblich (Stand DSM 7.2.2). In diesem Fall ist es ratsam, mit der ![2. Möglichkeit](https://github.com/toafez/HowTo_Linux.SSH.Terminal/edit/main/README.md#2-m%C3%B6glichkeit-die-verwendung-des-befehls-cat) fortzufahren, die in den nachfolgenden Abschnitt beschrieben wird.
 
-    ```
-    The authenticity of host '[IP-ADRESSE] ([IP-ADRESSE])' can't be established.
-    ED25519 key fingerprint is SHA256:DosguIv2tIYP+9n3BIrSM2df1841CdXbIc4pAZ01ehA.
-    This key is not known by any other names.
-    Are you sure you want to continue connecting (yes/no/[fingerprint])?
-    ```
+  ssh-copy-id verbindet sich nach dem Aufruf mit dem Remote-Server und prüft, ob im Home-Verzeichnis des angemeldeten Benutzers bereits ein Verzeichnis mit dem Namen **.ssh** existiert. Wenn nicht, wird es angelegt. Im nächsten Schritt prüft ssh-copy-id, ob im Verzeichnis .ssh eine Datei mit dem Namen **authorized_keys** existiert. Falls nicht, wird diese Datei ebenfalls angelegt. Danach wird der öffentliche Schlüssel in die Datei authorized_keys kopiert. Zum Schluss werden noch die entsprechenden Verzeichnis- und Dateirechte gesetzt, bevor die Verbindung wieder beendet wird.
 
-    Nun wirst du aufgefordert dein Passwort für die Anmeldung an deinem Remote-Server einzugeben.
+  1. Um dich mit deinem Remote Server verbinden zu können, benötigst du neben der IP-Adresse und dem Port auch den Benutzernamen sowie das zugehörige Passwort. Ersetze daher im folgenden Befehl die Platzhalter für [PORT], [BENUTZERNAME] und [IP-ADRESSE] durch deine eigenen Daten. Außerdem benötigst du noch den Speicherort und den Dateinamen des öffentlichen Schlüssels, der sich in diesem Beispiel im Verzeichnis `/home/[BENUTZERNAME]/.ssh/` unter dem Namen `id_rsa.pub` bzw. unter `~/.ssh/id_rsa.pub` auf deinen lokalen Linux Betriebssystem befindet. Führe anschließend folgenden Befehl aus.
 
-    `[BENUTZERNAME]@[IP-ADRESSE]'s password:`
+      `ssh-copy-id -i ~/.ssh/id_rsa.pub -p [PORT] [BENUTZERNAME]@[IP-ADRESSE]`
 
-3. Nach erfolgreicher Anmeldung solltest du dich auf der Konsole deines Remote-Servers befinden. Überprüfe auch hier, ob du dich im Home-Verzeichnis des angemeldeten Benutzers befindest.
+  2. Nachdem du den Befehl mit der Eingabetaste bestätigt hast, solltest du eine Meldung sehen, die dich am Ende des Textes auffordert, den Verbindungsaufbau mit **yes** zu bestätigen. `Are you sure you want to continue connecting (yes/no/[fingerprint])?` Diese Meldung erscheint nur, wenn du dich zum ersten Mal per SSH mit dem Remote-Server verbinden willst. Dabei wird ein sogenannter **Fingerprint** in der Datei `~/.ssh/known_hosts` auf deinem Client-Betriebssystem hinterlegt, um zukünftige Verbindungen zu erlauben.
 
-     ```
-    [BENUTZERNAME]@[REMOTE-SERVER]:~$ pwd
-    /home/[BENUTZERNAME]
+      ```
+      The authenticity of host '[IP-ADRESSE] ([IP-ADRESSE])' can't be established.
+      ED25519 key fingerprint is SHA256:DosguIv2tIYP+9n3BIrSM2df1841CdXbIc4pAZ01ehA.
+      This key is not known by any other names.
+      Are you sure you want to continue connecting (yes/no/[fingerprint])?
+      ```
 
-    ```
-     
-4. Erstelle auch hier ein neues verstecktes Verzeichnis mit dem Namen .ssh und weise diesem Verzeichnis die notwendigen Berechtigungen zu.
+  3. Nun wirst du aufgefordert dein Passwort für die Anmeldung an deinem Remote-Server einzugeben.
 
-    `mkdir .ssh`
+      `[BENUTZERNAME]@[IP-ADRESSE]'s password:`
 
-    `chmod 700 .ssh`
+  4. Nach erfolgreicher Anmeldung beginnt der Befehl ssh-copy-id mit der Ausführung der oben beschriebenen Aufgaben. Nach Abschluss der Arbeiten wird die Verbindung automatisch getrennt und zur Konsole des Client-Betriebssystems zurückgekehrt.
 
-6. Melde dich wieder vom Remote-Server ab, um zur Konsole deines Client-Betriebssystems zurückzukehren.
+  5. Überspringen die zweite Möglichkeit und fahre mit Abschnitt ![Den öffentlichen Schlüssel auf den Remote-Server übertragen](https://github.com/toafez/HowTo_Linux.SSH.Terminal/edit/main/README.md#den-%C3%B6ffentlichen-schl%C3%BCssel-auf-den-remote-server-%C3%BCbertragen) fort. 
 
-    `exit`
+### 2. Möglichkeit: Die Verwendung des Befehls `cat`
+  Sollte der Befehl ssh-copy-id nicht zur Verfügung stehen, wäre der Befehl cat das Mittel der Wahl. Da dieser Befehl allein jedoch keine Verzeichnisse und/oder Dateien auf dem Remote-Server anlegt und auch keine Verzeichnis- und Dateirechte vergibt, müssen diese Schritte manuell mit verschiedenen Befehlen durchgeführt werden. Der Befehl cat kopiert lediglich den öffentlichen Schlüssel des Client-Betriebssystems in die authorized_keys des Remote-Servers. Im Folgenden werden alle Schritte nacheinander abgearbeitet.
 
-## Den öffentlichen Schlüssel auf den Remote-Server übertragen.
-1. Nun kann der Inhalt der Datei id_rsa.pub und damit der öffentliche Schlüssel über eine SSH-Verbindung auf den Remote-Server in die Datei authorized_keys übertragen werden, die ggf. angelegt wird, wenn sie noch nicht existiert. Ersetze dafür im folgenden Befehl die Platzhalter für [PORT], [BENUTZERNAME] und [IP-ADRESSE] durch deine eigenen Daten, ohne die eckigen Klammern zu verwenden. Führe anschließend folgenden Befehl aus
+  1. Um dich mit deinem Remote Server verbinden zu können, benötigst du neben der IP-Adresse und dem Port auch den Benutzernamen sowie das zugehörige Passwort. Ersetze daher im folgenden Befehl die Platzhalter für [PORT], [BENUTZERNAME] und [IP-ADRESSE] durch deine eigenen Daten. Führe anschließend folgenden Befehl aus
 
-    `cat ~/.ssh/id_rsa.pub | ssh -p [PORT] [BENUTZERNAME]@[IP-ADRESSE] "cat >> ~/.ssh/authorized_keys"`
+      `ssh -p [PORT] [BENUTZERNAME]@[IP-ADRESSE]`
 
-2. Nach erfolgreicher Anmeldung durch die Eingabe des Passwortes wurde der öffentliche Schlüssel in der Datei ~/.ssh/authorized_keys deines Remote-Servers gespeichert und die Verbindung wieder getrennt. Du befindest dich weiterhin auf der Konsole deines lokalen Linux Betriebssystems.
+  2. Nachdem du den Befehl mit der Eingabetaste bestätigt hast, solltest du eine Meldung sehen, die dich am Ende des Textes auffordert, den Verbindungsaufbau mit **yes** zu bestätigen. `Are you sure you want to continue connecting (yes/no/[fingerprint])?` Diese Meldung erscheint nur, wenn du dich zum ersten Mal per SSH mit dem Remote-Server verbinden willst. Dabei wird ein sogenannter **Fingerprint** in der Datei `~/.ssh/known_hosts` auf deinem Client-Betriebssystem hinterlegt, um zukünftige Verbindungen zu erlauben.
+
+      ```
+      The authenticity of host '[IP-ADRESSE] ([IP-ADRESSE])' can't be established.
+      ED25519 key fingerprint is SHA256:DosguIv2tIYP+9n3BIrSM2df1841CdXbIc4pAZ01ehA.
+      This key is not known by any other names.
+      Are you sure you want to continue connecting (yes/no/[fingerprint])?
+      ```
+
+  3. Nun wirst du aufgefordert dein Passwort für die Anmeldung an deinem Remote-Server einzugeben.
+
+      `[BENUTZERNAME]@[IP-ADRESSE]'s password:`
+
+  4. Nach erfolgreicher Anmeldung solltest du dich auf der Konsole deines Remote-Servers befinden. Überprüfe auch hier, ob du dich im Home-Verzeichnis des angemeldeten Benutzers befindest.
+
+       ```
+      [BENUTZERNAME]@[REMOTE-SERVER]:~$ pwd
+      /home/[BENUTZERNAME]
+      ```
+
+  5. Erstelle auch hier ein neues verstecktes Verzeichnis mit dem Namen .ssh und weise diesem Verzeichnis die notwendigen Berechtigungen zu.
+
+      `mkdir .ssh`
+
+      `chmod 700 .ssh`
+
+  6. Melde dich wieder vom Remote-Server ab, um zur Konsole deines Client-Betriebssystems zurückzukehren.
+
+      `exit`
+
+  7. Nun kann der Inhalt der Datei id_rsa.pub und damit der öffentliche Schlüssel über eine SSH-Verbindung auf den Remote-Server in die Datei authorized_keys übertragen werden, die ggf. angelegt wird, wenn sie noch nicht existiert. Ersetze dafür im folgenden Befehl die Platzhalter für [PORT], [BENUTZERNAME] und [IP-ADRESSE] durch deine eigenen Daten, ohne die eckigen Klammern zu verwenden. Führe anschließend folgenden Befehl aus
+
+      `cat ~/.ssh/id_rsa.pub | ssh -p [PORT] [BENUTZERNAME]@[IP-ADRESSE] "cat >> ~/.ssh/authorized_keys"`
+
+  8. Nach erfolgreicher Anmeldung durch die Eingabe des Passwortes wurde der öffentliche Schlüssel in der Datei ~/.ssh/authorized_keys deines Remote-Servers gespeichert und die Verbindung wieder getrennt. Du befindest dich weiterhin auf der Konsole deines lokalen Linux Betriebssystems.
 
 
 ## Erneute SSH-Verbindung zu deinem Remote-Server aufbauen...
@@ -189,7 +217,7 @@ Es ist wichtig, dass sowohl das Verzeichnis .ssh als auch die darin enthaltenen 
 
     `ssh -p [PORT] [BENUTZERNAME]@[IP-ADRESSE]`
 
-2. Wenn alles geklappt hat, solltest du dich nun auf der Konsole deines Remote-Servers befinden, ohne ein Passwort eingegeben zu haben (es sei denn, du verwendest eine der oben genannten Passphrase). Und wenn du schon dabei bist, kannst du auch die Berechtigungen für die Datei authorized_keys korrigieren, indem du folgenden Befehl eingibst
+2. Wenn alles geklappt hat, solltest du dich nun auf der Konsole deines Remote-Servers befinden, ohne ein Passwort eingegeben zu haben (es sei denn, du verwendest eine der oben genannten Passphrase). Und wenn du schon dabei bist, kannst du, solltrst du den Weg über die 2 Möglichkeit gegangen sein, auch die Berechtigungen für die Datei authorized_keys korrigieren, indem du folgenden Befehl eingibst
 
     `chmod 600 ~/.ssh/authorized_keys`
 
