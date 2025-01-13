@@ -166,7 +166,7 @@ Um in Zukunft eine passwortfreie Anmeldung an einem Remote-Server zu ermögliche
 
   4. Nach erfolgreicher Anmeldung beginnt der Befehl ssh-copy-id mit der Ausführung der oben beschriebenen Aufgaben. Nach Abschluss der Arbeiten wird die Verbindung automatisch getrennt und zur Konsole des Client-Betriebssystems zurückgekehrt.
 
-  5. Überspringen die zweite Möglichkeit und fahre mit Abschnitt [Erneute SSH-Verbindung zu deinem Remote-Server aufbauen](https://github.com/toafez/HowTo_Linux.SSH.Terminal?tab=readme-ov-file#erneute-ssh-verbindung-zu-deinem-remote-server-aufbauen) fort. 
+  5. Überspringe die zweite Möglichkeit und fahre mit Abschnitt [Erneute SSH-Verbindung zu deinem Remote-Server aufbauen](https://github.com/toafez/HowTo_Linux.SSH.Terminal?tab=readme-ov-file#erneute-ssh-verbindung-zu-deinem-remote-server-aufbauen) fort. 
 
 ### 2. Möglichkeit: Die Verwendung des Befehls `cat`
   Sollte der Befehl ssh-copy-id nicht zur Verfügung stehen, wäre der Befehl cat das Mittel der Wahl. Da dieser Befehl allein jedoch keine Verzeichnisse und/oder Dateien auf dem Remote-Server anlegt und auch keine Verzeichnis- und Dateirechte vergibt, müssen diese Schritte manuell mit verschiedenen Befehlen durchgeführt werden. Der Befehl cat kopiert lediglich den öffentlichen Schlüssel des Client-Betriebssystems in die authorized_keys des Remote-Servers. Im Folgenden werden alle Schritte nacheinander abgearbeitet.
